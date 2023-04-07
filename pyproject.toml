@@ -46,7 +46,7 @@ dependencies = [
 dynamic = ["version"]
 
 [project.urls]
-Homepage = "https://github.com/mvanderlee/starmallow"
+Homepage = "https://github.com/mvanderlee/marshmallow_api_utils"
 
 
 [project.optional-dependencies]
@@ -58,6 +58,7 @@ test = [
   "ruff ==0.0.260",
 ]
 dev = [
+  "hatch",
   "isort >=5.0.6,<6.0.0",
   "ruff ==0.0.260",
   "pre-commit >=3.2.0,<4",
