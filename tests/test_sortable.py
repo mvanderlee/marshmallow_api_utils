@@ -104,11 +104,11 @@ def test_sort_no_meta():
 def test_sort_multiple_sql_expr_select():
     qp = QueryParams.loads('{"sort": "name:asc,birthdate:DESC"}')
 
-    query: Select = select(DBModel)
-    sorted_query = qp.apply_sort(query)
+    stmt: Select = select(DBModel)
+    sorted_stmt = qp.apply_sort(stmt)
 
     assert_string_minified(
-        str(sorted_query),
+        str(sorted_stmt),
         '''
             SELECT db_model.id, db_model.name, db_model.birthdate, db_model.age
             FROM db_model
