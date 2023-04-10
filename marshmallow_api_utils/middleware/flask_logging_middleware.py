@@ -20,7 +20,7 @@ x_headers = [
 ]
 
 
-class Log:
+class FlaskLoggingMiddleware:
 
     def __init__(self, app: Flask = None):
         self.app = app
@@ -52,7 +52,7 @@ class Log:
                 log_fields['dest_port'] = int(request.host.split(':', 1)[1]) if len(
                     request.host.split(':', 1),
                 ) == 2 else 80
-                log_fields['duration'] = time.time() - request.start_time.start
+                log_fields['duration'] = time.time() - request.start_time
                 log_fields['http_method'] = request.method
                 log_fields['http_status'] = response.status_code
                 log_fields['mimetype'] = request.mimetype
