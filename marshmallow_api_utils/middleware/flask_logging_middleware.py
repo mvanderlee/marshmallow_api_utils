@@ -2,7 +2,7 @@ import logging
 import time
 
 try:
-    from flask import Flask, current_app, request
+    from flask import Flask, Response, current_app, request
 except ImportError:
     raise Exception("flask must be installed to use FlaskBlueprint") from None
 
@@ -39,7 +39,7 @@ class FlaskLoggingMiddleware:
                 request.start_time = time.time()
 
             @app.after_request
-            def log_request(response):
+            def log_request(response: Response) -> Response:
 
                 log_fields = {}
                 log_fields['authorisation'] = request.authorization
@@ -80,3 +80,5 @@ class FlaskLoggingMiddleware:
                         log_fields[header.lower().replace('-', '_')] = request.headers.get(header)
 
                 logging.getLogger(current_app.name).info("Request complete.", extra=log_fields)
+
+                return response
