@@ -7,7 +7,7 @@ from .package_finder import PackageFinder
 try:
     from flask import Blueprint as FlaskBlueprint
     from flask import Flask
-    from flask.views import MethodViewType
+    from flask.views import MethodView
 except ImportError:
     raise Exception("flask must be installed to use FlaskBlueprint") from None
 
@@ -35,7 +35,7 @@ class Blueprint(SmorestBlueprint):
         else:
             def decorator(func):
                 endpoint = options.pop("endpoint", func.__name__)
-                if isinstance(func, MethodViewType):
+                if isinstance(func, MethodView):
                     view_func = func.as_view(endpoint)
                 else:
                     view_func = func
