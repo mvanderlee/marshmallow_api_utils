@@ -7,6 +7,7 @@ except ImportError:
     raise Exception("flask must be installed to use FlaskBlueprint") from None
 
 try:
+    import flask_log_request_id
     from flask_log_request_id import RequestID, current_request_id
 except ImportError:
     flask_log_request_id = None
