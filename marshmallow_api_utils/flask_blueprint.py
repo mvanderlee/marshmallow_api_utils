@@ -50,6 +50,7 @@ def dynamically_register_routes(
     smorest_api: Api,
     package_name=None,
     routes_package_name='routes',
+    root_url_prefix: str = None,
 ):
     '''
         Dynamically registers all blueprints.
@@ -69,6 +70,7 @@ def dynamically_register_routes(
             blueprint,
             flask_app,
             smorest_api,
+            root_url_prefix=root_url_prefix,
         )
 
 
@@ -76,18 +78,22 @@ def register_blueprint(
     blueprint: Union[FlaskBlueprint, SmorestBlueprint],
     flask_app: Flask,
     smorest_api: Api,
+    root_url_prefix: str = None,
 ):
     '''
         Registers Blueprint
     '''
+    root_url_prefix = '' if root_url_prefix is None else root_url_prefix
     logger.info(
-        f"Registering blueprint '{blueprint.name}' with prefix '{blueprint.url_prefix}'",
+        f"Registering blueprint '{blueprint.name}' with prefix '{root_url_prefix}{blueprint.url_prefix}'",
         extra={
+            'root_url_prefix': root_url_prefix,
             'blueprint.name': blueprint.name,
             'blueprint.import_name': blueprint.import_name,
             'blueprint.url_prefix': blueprint.url_prefix,
         },
     )
+    blueprint.url_prefix = root_url_prefix + blueprint.url_prefix
 
     if isinstance(blueprint, SmorestBlueprint):
         smorest_api.register_blueprint(blueprint)
